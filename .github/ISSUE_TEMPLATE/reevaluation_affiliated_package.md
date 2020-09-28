@@ -35,7 +35,8 @@ assignees: Cadair
 
 ## Instructions to Reviewer
 
-Please copy the following and select the ranking for requested criteria, the full review criteria can be found here:
+The requested review should focus on at most three of the sections below.
+Please copy the following and remove the sections that are not required.
 
 ```
 * Functionality           : General Package / Specialized Package / Not Relevant
