@@ -1,6 +1,6 @@
 ---
 name: Reevaluation of Affiliated Package
-about: Submit an update review of a affiliated package
+about: Submit a request for an updated review of an affiliated package
 labels: Affiliated Package Review
 assignees: Cadair
 ---
@@ -17,7 +17,7 @@ assignees: Cadair
 - Link to Code of Conduct or page describing adopted Code of Conduct:
 
 ## Requested Re-review
-<!-- What would you like to be reviewed again? !-->
+<!-- What would you like to be reviewed again? Please describe what has changed. !-->
 
 <!-- Submitters do not need to edit below this comment !-->
 
