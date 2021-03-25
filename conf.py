@@ -3,18 +3,20 @@ import sys
 from urllib.request import urlretrieve
 
 import ablog
-from sunpy_sphinx_theme.conf import *
+from sunpy_sphinx_theme.conf import *  # NOQA
 
 sys.path.append(os.path.abspath("exts"))
 extensions = [
-    "sphinx.ext.githubpages",
     "ablog",
-    "rawfiles",
     "cards",
-    "sphinx.ext.intersphinx",
+    "myst_parser",
     "nbsphinx",
+    "rawfiles",
+    "sphinx.ext.githubpages",
+    "sphinx.ext.intersphinx",
     "sphinx.ext.mathjax",
 ]
+myst_update_mathjax = False
 templates_path = [ablog.get_html_templates_path()]
 
 intersphinx_mapping = {
@@ -26,17 +28,25 @@ intersphinx_mapping = {
 }
 
 rawfiles = ["jitsi.html", "issues.html"]
-
 mathjax_path = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"
-
 disqus_shortname = "sunpy-org"
 blog_baseurl = "https://sunpy.org/"
 blog_feed_fulltext = True
 blog_feed_length = 10
 blog_feed_archives = True
 
-source_suffix = ".rst"
-exclude_patterns = ["posts/*/.ipynb_checkpoints/*"]
+source_suffix = {
+    ".rst": "restructuredtext",
+    ".md": "markdown",
+}
+exclude_patterns = [
+    "posts/*/.ipynb_checkpoints/*",
+    ".github/*",
+    ".history",
+    "github_submodule/*",
+    "LICENSE.md",
+    "README.md",
+]
 master_doc = "index"
 project = u"SunPy"
 author = "SunPy Project"
@@ -70,6 +80,7 @@ html_theme_options.update(
 html_sidebars = {
     "index": None,
     "about": ["localtoc.html"],
+    "coc": ["localtoc.html"],
     "contribute": ["localtoc.html"],
     "blog": ["searchbox.html", "categories.html", "archives.html"],
     "blog/**": ["searchbox.html", "categories.html", "archives.html"],
@@ -79,6 +90,7 @@ html_sidebars = {
     "project/index": ["projecttoc.html"],
     "project/roles": ["rolestoc.html"],
     "project/affiliated": ["affiliatedtoc.html"],
+    "project/former": ["formertoc.html"],
 }
 
 # nbsphinx options
@@ -98,7 +110,6 @@ nbsphinx_prolog = r"""
 
     __ https://github.com/sunpy/sunpy.org/blob/{{ env.config.release }}/{{ docname }}
 """
-
 
 urlretrieve(
     "https://raw.githubusercontent.com/sunpy/sunpy/master/sunpy/CITATION.rst",

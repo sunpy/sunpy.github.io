@@ -1,19 +1,23 @@
-# SunPy Website
-
-Here lays the source code for the SunPy website.
+# sunpy.org website
 
 ## Background
 
 This site makes use of [Sphinx](https://www.sphinx-doc.org/en/stable/), and was built upon [Bootstrap](https://getbootstrap.com) via the [Sphinx Bootstrap theme](https://github.com/ryan-roemer/sphinx-bootstrap-theme).
-So each static page is written in reStructuredText (RST).
-
 We use [Netlify](https://www.netlify.com/) deploy and host the [website](https://app.netlify.com/sites/sunpy/overview).
 
 ## Testing Locally
 
 To setup your computer to run this site locally, you need to install the various Python packages in the [requirements.txt](requirements.txt) at the top level of this repository.
 
-You will *WANT* to test any changes you have made to the website.
+Furthermore there is a sub-module that we use to get certain files for the build.
+
+```bash
+git submodule update --init
+```
+
+This will initialize the submodule for you locally.
+
+You will _WANT_ to test any changes you have made to the website.
 To do this, we have a Makefile that you should use:
 
 ```bash
@@ -33,32 +37,47 @@ If you are unfamiliar with this, please see this guide from [GitHub.](https://he
 
 ## PR Review
 
-When a PR is opened, two continuous integration services will trigger.
-We use [Travis](https://travis-ci.org/) to test the build and if it fails we wil get a full build log to debug.
-While [Netlify](https://www.netlify.com/) will create a preview of any content or style changes.
+When a PR is opened, [Netlify](https://www.netlify.com/) will create a preview of any content or style changes.
 
-Both of these services must pass before the PR will be merged, furthermore, one review is required before a PR can be merged as well.
+This must pass before the PR will be merged, furthermore, one review is required before a PR can be merged as well.
 
 ## Creating a Blog Post
 
 Blog posts can be added by creating a new text file in the `posts/<current year>` directory.
 The filename must use the following naming convention `YEAR-MONTH-DAY-title.{ext}` and be written in one of the following formats:
 
-* [RST](https://www.sphinx-doc.org/en/stable/rest.html) formatted text, `ext=rst`,
-* [Jupyter notebook](https://jupyter.org/), `ext=ipynb`; (notebooks are converted to RST using the [nbsphinx](https://nbsphinx.readthedocs.io) extension)
+- [RST](https://www.sphinx-doc.org/en/stable/rest.html) formatted text, `ext=rst`,
+- [Jupyter notebook](https://jupyter.org/), `ext=ipynb`; (notebooks are converted to RST using the [nbsphinx](https://nbsphinx.readthedocs.io) extension)
+- [MD](https://www.markdownguide.org/cheat-sheet/) formatted text, `ext=md`,
+
+Please also see the [ABlog documention](https://ablog.readthedocs.io/) for more information.
 
 ### RST
 
 If you write your post in RST formatted text, each file must also contain the following header for Sphinx via [Ablog](https://github.com/sunpy/ablog) to parse the post properly:
 
 ```rst
-<Title>
-=========
-
 .. post:: <Date>
    :author: <Name>
    :tags: <Tag list with commas>
    :category: <One of the below>
+
+<Title>
+=========
+
+```
+
+or
+
+```rst
+:blogpost: true
+:date: <Date>
+:author: <Name>
+:category: <One of the below>
+
+<Title>
+=========
+
 ```
 
 ### Jupyter Notebook
@@ -75,6 +94,9 @@ When writing posts as Jupyter notebooks, the first cell should be a Markdown cel
    <Short description of post>
 ```
 
+The short description will appear as a preview of your post on the blog page.
+See the [nbsphinx docs](https://nbsphinx.readthedocs.io/raw-cells.html) for information on making raw notebook cells compatible with Sphinx and RST.
+
 You might have to open the notebook in a text editor and change the "metadata" for the post cell to include the following
 
 ```
@@ -83,23 +105,40 @@ You might have to open the notebook in a text editor and change the "metadata" f
    },
 ```
 
-The short description will appear as a preview of your post on the blog page. See the [nbsphinx docs](https://nbsphinx.readthedocs.io/raw-cells.html) for information on making raw notebook cells compatible with Sphinx and RST.
+In theory the alternative rst style and the below markdown style should also work in this cell.
 
-Additionally, Sphinx will automatically add a link to the interactive version of your notebook, hosted on [Binder](https://mybinder.org/), to the top of your post. If your notebook requires any other dependencies besides SunPy (or its dependencies), they will need to be added to `binder/requirements.txt`.
+Additionally, Sphinx will automatically add a link to the interactive version of your notebook, hosted on [Binder](https://mybinder.org/), to the top of your post.
+If your notebook requires any other dependencies besides SunPy (or its dependencies), they will need to be added to `binder/requirements.txt`.
+
+### Markdown
+
+If you write your post in markdown formatted text, each file must contain the following header for Sphinx via [Ablog](https://github.com/sunpy/ablog) to parse the post properly:
+
+```
+---
+blogpost: true
+date: <Date>
+author: <Name>
+category: <One of the below>
+---
+
+# <Title>
+
+```
 
 ### Metadata
 
 Please note that the date for the post is different to the way it is written for the blog filename.
-Since this date is reader facing, we want month day year **e.g.,** 14 May 2056.
+Since this date is reader facing, we want month day year **e.g.,** May 14 2056.
 Also we try to enforce one line per sentence.
 
 The current range of categories we have "officially" are:
 
-* Release
-* Update
-* GSoC
-* SOCIS
-* Tutorial
+- Release
+- Update
+- GSoC
+- SOCIS
+- Tutorial
 
 Please select the one that is more appropriate, for many `Update` would be enough.
 
@@ -109,12 +148,12 @@ For tags, you can choose what you prefer for your post but please don't use any 
 
 The colors used in the site are:
 
-* #444444
-* #FE7900
-* #BDBDBD
+- #444444
+- #FE7900
+- #BDBDBD
 
 ## Miscellaneous
 
 Some things to watch out for:
 
-* do not use bare colons inside your post title. If you really need a colon use `&#58;`
+- do not use bare colons inside your post title. If you really need a colon use `&#58;`
